@@ -32,16 +32,6 @@ module.exports = {
   
 };
 
-//const hre = require('hardhat'); 
-//const { ethers } = hre; 
-//const { task } = require("hardhat/config");
-//const Funding = require("../artifacts/contracts/Funding.sol/Funding.json")
-//const provider = ethers.providers.InfuraProvider("rinkeby", process.env.INFURA_URL)
-//const wallet = ethers.Wallet(process.env.PRIVATE_KEY, provider)
-
-//const Balance = async(user) => {
-//    return ethers.provider.getBalance(user.address)
-//} 
 
 task("sendDonat", " Send some money to this Fund")
     .addParam("address", "Yoy want to send on this contract address")
