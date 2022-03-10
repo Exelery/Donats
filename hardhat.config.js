@@ -83,15 +83,15 @@ task("getDonators", "Get list of the all donators")
   .addParam("address", "The contract address on Rinkeby")
   .addParam("amount", "How much do you want withdraw")
   .addParam("sendto", "where you want to send")
-  .setAction(async (addr, amount, sendTo) => {
+  .setAction(async (taskArgs) => {
     const provider = new ethers.providers.InfuraProvider("rinkeby", INFURA_URL)
     const MyContract = await ethers.getContractFactory("Funding");
     const wallet = new ethers.Wallet(PRIVATE_KEY, provider)
-    const contract = await MyContract.attach(addr.address);
-    const balance = await ethers.provider.getBalance(addr.address)
+    const contract = await MyContract.attach(taskArgs.address);
+    const balance = await ethers.provider.getBalance(taskArgs.address)
     console.log(ethers.utils.formatEther(balance), "ETH")
-    console.log(sentTo.address)
-    await contract.transferFund("0xFCc874C64D2200a8271cA8d3018caECDfB5A4ba2", x)
+    console.log(taskArgs.sendto.address)
+    await contract.transferFund(taskArgs.sendto, ethers.utils.parseUnits(`${taskArgs.amount}`, "ether"))
     console.log(ethers.utils.formatEther(balance), "ETH")
 
   });
