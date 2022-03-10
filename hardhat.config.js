@@ -45,15 +45,18 @@ module.exports = {
 
 task("sendDonat", " Send some money to this Fund")
     .addParam("address", "Yoy want to send on this contract address")
-    .setAction(async (addr,)=>{
+    .addParam("amount", " The amount of donation")
+    .setAction(async (taskArgs)=>{
       const provider = new ethers.providers.InfuraProvider("rinkeby", INFURA_URL)
       const MyContract = await ethers.getContractFactory("Funding");
       const wallet = new ethers.Wallet(PRIVATE_KEY, provider)
+
+      console.log( taskArgs.amount)
       const contract = await MyContract.attach(
-        addr.address // The deployed contract address
+        taskArgs.address // The deployed contract address
       );
-        await contract.sendDonation({value: ethers.utils.parseEther(`0.01`)})
-   console.log(`Contract balance ${await ethers.provider.getBalance(addr.address)}`);
+        await contract.sendDonation({value: ethers.utils.parseUnits(`${taskArgs.amount}`, "ether")})
+   console.log(`Contract balance ${await ethers.provider.getBalance(taskArgs.address)}`);
 
     })
 
